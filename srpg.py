@@ -14,9 +14,9 @@ import effectlib
 import vecmath
 import math
 
-import psycho
+import psyco
 
-psycho.full( )
+psyco.full( )
 
 # Addon information
 info = es.AddonInfo( )
