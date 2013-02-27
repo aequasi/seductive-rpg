@@ -74,7 +74,7 @@ def load():
 	global language_keygroup
 
 	debugMsg( 0, '\n************', writeTime = False )
-	debugMsg( 0, '%s Version: %s' % info.name % info.version, writeTime = False )
+	debugMsg( 0, '%s Version: %s' % ( info.name, info.version ), writeTime = False )
 	debugMsg( 0, 'Created by %s' % info.author, writeTime = False )
 	debugMsg( 0, 'Log file started at %s' % time.strftime( "%A %d %B %Y - %H:%M:%S" ), writeTime = False )
 	debugMsg( 0, '\nSystem Info:', writeTime = False )
