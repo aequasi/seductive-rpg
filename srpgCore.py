@@ -15,7 +15,7 @@ import vecmath
 import math
 
 
-class core:
+class srpgCore(object):
 
 	info = {}
 
@@ -49,14 +49,20 @@ class core:
 	'srpg_new_race_increments_level': [ 1, "Will unlocking a new race increment the players total level" ]
 	}
 
-	dir = None
-	text = None
+	dir 		  = None
+	text 		  = None
 	_dict_SRPGPlayers = None
-	race_folder = None
+	race_folder  	  = None
 	language_keygroup = None
-	isModEvents = False
+	isModEvents 	  = False
+	es 		  = None
+	popuplib 	  = None
 
 	def __init__( self ):
+		print "Calling `__init__`"
+		self.es = es
+		self.popuplib = popuplib
+
 		# Addon information
 		self.info = es.AddonInfo( )
 		self.info.name = "Seductive RPG"
@@ -74,11 +80,12 @@ class core:
 		self.isModEvents = os.path.isfile(es.getAddonPath('srpg').replace('\\','/').replace('/srpg','/modevents/__init__.py'))
 
 	def load( self ):
+		print "Calling `load()`"
 		info = self.info
 		self.showLoadMessages()
 
 
-	def showLoadMessages(self ):
+	def showLoadMessages( self ):
 		self.debug( 0, '\n************', writeTime = False )
 		self.debug( 0, '%s Version: %s' % ( self.info.name, self.info.version ), writeTime = False )
 		self.debug( 0, 'Created by %s' % self.info.author, writeTime = False )
@@ -96,7 +103,7 @@ class core:
 	def debug(level, text, addToFile=True, writeTime=True):
 		""" This method prints text to the console, and if addToFile is true, it will open a log file and append the log and time to it. """
 		if level <= int(es.ServerVar('srpg_debug')):
-			tempText = text
+			tempText = "[SeductiveRPG] - %s" % text
 			while len(tempText) > 200:
 				index    = tempText[:200].rfind(' ')
 				es.dbgmsg(0, tempText[:index])

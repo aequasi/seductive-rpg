@@ -1,14 +1,16 @@
 import es
-import core
+from srpgCore import srpgCore
 import psyco
 psyco.full( )
 
-es.load( 'srpg/core' )
+core = None 
 
-core = core()
-
-info = core[ 'info' ]
+info = None
 
 def load( ):
+	core = srpgCore()
+	info = core.info
+	print info
 	""" Runs when the addon is loaded. Loads all necessary files into memory """
-	core.load()
+	print core
+	core.load( )
