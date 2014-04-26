@@ -5,19 +5,16 @@ class database(object):
     con = None
     connected = False
     retry = 0
-    config = {}
 
-    def __init__(self, config):
-        self.config = config['Database']
+    def __init__(self):
         self.connect()
         self.con.execute("""
             CREATE TABLE IF NOT EXISTS `client` (
-                id integer autoincrement,
                 steam_id text,
                 class_name text,
                 level integer DEFAULT 1,
                 experience integer DEFAULT 0,
-                PRIMARY KEY(id, steam_id, class_name)
+                PRIMARY KEY(steam_id, class_name)
             )
         """)
 
