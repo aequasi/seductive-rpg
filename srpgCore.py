@@ -1,6 +1,6 @@
 import os
-import time
 
+import time
 import es
 import playerlib
 import gamethread
@@ -10,6 +10,7 @@ from database import database
 import events.mainEvent as mainEvent
 import command.command as command
 import menu.menu as menu
+import components.player
 
 
 class srpgCore(object):
@@ -70,11 +71,11 @@ class srpgCore(object):
             'srpg_levelinterval': [500, "The amount of xp increment after level 2"],
             'srpg_killxp': [40, "The amount of xp gained from a kill"],
             'srpg_headshotxp': [25, "The amount of xp gained from a headshot"],
-            'srpg_winroundxp': [15, "The amount of xp gained from winning the round"],
+            'srpg_winroundxp': [100, "The amount of xp gained from winning the round"],
             'srpg_levelxp': [4,
                              "The amount of extra xp gained multiplied by the amount of levels the victim is above the attacker"],
             'srpg_announcexp': [1, "Announce xp on start?"],
-            'srpg_freelevels': [10,
+            'srpg_freelevels': [0,
                                 "The amount of free levels a player gains from joining the server for the first time."],
             'srpg_inactivity_counter': [7, "After this many days, the user will be deleted from the dictionary"],
             'srpg_savetimer': [5, "The amount of minutes that the database will save"],
@@ -98,14 +99,15 @@ class srpgCore(object):
         c = self.db.getCursor()
         result = c.execute("SELECT * FROM client").fetchall()
         players = {}
-        for player in result:
-            sid = player[1]
-            cid = player[2]
+        for data in result:
+            player = components.player.player(data)
+            sid = data[1]
+            cid = data[2]
             if not players.has_key(sid):
                 players[sid] = {}
             if not players[sid].has_key(cid):
                 players[sid][cid] = {}
-            players[sid][cid] = {'level': int(player[3]), 'experience': int(player[4])}
+            players[sid][cid] = {'level': int(data[3]), 'experience': int(data[4])}
         self.players = players
         c.close()
 
